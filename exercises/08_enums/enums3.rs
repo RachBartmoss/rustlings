@@ -5,10 +5,24 @@
 // Execute `rustlings hint enums3` or use the `hint` watch subcommand for a
 // hint.
 
-// I AM NOT DONE
+
+
+// In this exercise we see that we need to implement 4 enumerations variants to 
+// comply with the rest of the code, these variants will then be used by the 
+// process method to operate on the state struct and modify the corresponding
+// struct variable, so we need to declare the variants with the same type as 
+// the struct member , a tri-u8 tuple for color-changing, a Point struct for moving 
+// and a String for echoing into the state's message.
+//
+// we then create a match case for all these variant, we also bind the value contained
+// in the variant to extract data so we can add them to the struct variable (extracting
+// the color using x,y,z to then move them in the struct's color member)
 
 enum Message {
-    // TODO: implement the message variant types based on their usage below
+    ChangeColor(u8,u8,u8),
+    Echo(String),
+    Move(Point),
+    Quit,
 }
 
 struct Point {
@@ -41,9 +55,17 @@ impl State {
     }
 
     fn process(&mut self, message: Message) {
-        // TODO: create a match expression to process the different message variants
-        // Remember: When passing a tuple as a function argument, you'll need extra parentheses:
-        // fn function((t, u, p, l, e))
+        match message {
+            Message::ChangeColor(x,y,z) => {
+                self.color.0 = x;
+                self.color.1 = y;
+                self.color.2 = z;
+            }
+            Message::Echo(string) => self.message = string,
+            Message::Move(point) => self.position = point,
+            Message::Quit => self.quit = true,
+
+        }
     }
 }
 

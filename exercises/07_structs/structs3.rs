@@ -7,7 +7,19 @@
 // Execute `rustlings hint structs3` or use the `hint` watch subcommand for a
 // hint.
 
-// I AM NOT DONE
+// Here we must implement two method to the Package struct, both are quite explicite
+// the first determine if a parcel in international, the second the cost of shipment.
+// 
+// For the first function, we notice the sender and recipient variable contained 
+// in the Package Struct and the assert! situated further in the code and we can
+// be sure that it needs to return a boolean, true if it is internationnal and 
+// false if it is not, so we return in the function a not (!) comparison 
+// between sender and recipient.
+//
+// For the second function, as it takes another parameters, an u32 cents_per_gram
+// we only have to return the struct weight_in_grams variable multiplied by 
+// the price per gram, seeing as the price per gram is an unsigned 32 bit int, we 
+// chose the same type for the return value to avoid conversion.
 
 #[derive(Debug)]
 struct Package {
@@ -31,12 +43,12 @@ impl Package {
         }
     }
 
-    fn is_international(&self) -> ??? {
-        // Something goes here...
+    fn is_international(&self) -> bool {
+        self.recipient_country != self.sender_country
     }
 
-    fn get_fees(&self, cents_per_gram: u32) -> ??? {
-        // Something goes here...
+    fn get_fees(&self, cents_per_gram: u32) -> u32 {
+        self.weight_in_grams * cents_per_gram
     }
 }
 

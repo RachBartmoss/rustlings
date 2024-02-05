@@ -2,17 +2,22 @@
 //
 // Execute `rustlings hint if3` or use the `hint` watch subcommand for a hint.
 
-// I AM NOT DONE
+
+
+// In this example we are told that all arms of an if expression must return the same type.
+// This was not the case for the second and fourth arms that returned a float and a &str
+// respectively, so i modified both to use int32 value, knowing that code following it 
+// (the let habitat part), was using integer to return the proper habitat. 
 
 pub fn animal_habitat(animal: &str) -> &'static str {
     let identifier = if animal == "crab" {
         1
     } else if animal == "gopher" {
-        2.0
+        2
     } else if animal == "snake" {
         3
     } else {
-        "Unknown"
+        4
     };
 
     // DO NOT CHANGE THIS STATEMENT BELOW
