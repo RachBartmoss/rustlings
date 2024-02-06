@@ -9,7 +9,26 @@
 // Execute `rustlings hint errors6` or use the `hint` watch subcommand for a
 // hint.
 
-// I AM NOT DONE
+
+
+// In this case we first needed to build a function to convert
+// different kind of error into the same kind declared into our
+// enumeration. 
+//
+// this is relatively simple as we can copy the example given 
+// for CreationError, the only changes we make is : we take an 
+// Err of type ParseInError and return a the ParsInt variant 
+// of the ParsePosNonzeroError enum, filling it with the error
+// Given as argument.
+//
+// Then we need to apply this newly created function so the parse
+// situated in parse_pos_nonzero doesn't panic.
+// To do this we see that this function returns a type result with 
+// either a positiveNonzeroInteger, or a ParsePosNonzeroError variant
+// So we removed the unwrap() method, and added the map_err ethod that
+// executes on the ParseIntError returned by parse.
+// We can then transfer the error to the calling function, seeing as
+// it accepts the new error type as a valid return value.
 
 use std::num::ParseIntError;
 
@@ -25,13 +44,15 @@ impl ParsePosNonzeroError {
         ParsePosNonzeroError::Creation(err)
     }
     // TODO: add another error conversion function here.
-    // fn from_parseint...
+    fn from_parseint(err: ParseIntError) -> ParsePosNonzeroError {
+        ParsePosNonzeroError::ParseInt(err)
+    }
 }
 
 fn parse_pos_nonzero(s: &str) -> Result<PositiveNonzeroInteger, ParsePosNonzeroError> {
     // TODO: change this to return an appropriate error instead of panicking
     // when `parse()` returns an error.
-    let x: i64 = s.parse().unwrap();
+    let x: i64 = s.parse().map_err(ParsePosNonzeroError::from_parseint)?;
     PositiveNonzeroInteger::new(x).map_err(ParsePosNonzeroError::from_creation)
 }
 

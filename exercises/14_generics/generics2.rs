@@ -6,14 +6,24 @@
 // Execute `rustlings hint generics2` or use the `hint` watch subcommand for a
 // hint.
 
-// I AM NOT DONE
 
-struct Wrapper {
-    value: u32,
+
+// To make the Wrapper Type accept different data type, we need to modify
+// its struct declaration and the new() method function signature.
+// First we need to declare the generic data type by adding <T> to both
+// So that the Compiler knows of their existence.
+//
+// We have to also declare this in the implementation of the function 
+// new, we could name it the same as in the struct declaration or another
+// name, but we name it T also by convention.
+
+
+struct Wrapper<T> {
+    value: T,
 }
 
-impl Wrapper {
-    pub fn new(value: u32) -> Self {
+impl<U> Wrapper<U> {
+    pub fn new(value: U) -> Self {
         Wrapper { value }
     }
 }
