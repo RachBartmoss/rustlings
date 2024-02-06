@@ -8,10 +8,16 @@
 // Execute `rustlings hint modules3` or use the `hint` watch subcommand for a
 // hint.
 
-// I AM NOT DONE
+
+
+// Here we can use 2 syntax to correctly import the std::time Systemtime
+// And UNIX EPOCH, we can use the glob operator * to import all from the
+// std::time crate, or we can specify the necessary part of the crate we
+// want using the {} symbols
+
 
 // TODO: Complete this use statement
-use ???
+use std::time::{UNIX_EPOCH,SystemTime};
 
 fn main() {
     match SystemTime::now().duration_since(UNIX_EPOCH) {

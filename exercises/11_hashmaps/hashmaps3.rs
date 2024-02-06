@@ -14,7 +14,32 @@
 // Execute `rustlings hint hashmaps3` or use the `hint` watch subcommand for a
 // hint.
 
-// I AM NOT DONE
+
+
+
+// Here we must fulfill 2 missions : 
+// If there is no entry for the the first or second team, we must
+// create one with the appropriate key value : 
+// Teamname: String , Goals  : Team{scored,conceded}
+//
+// Starting from there it would be tempting to just create the entry
+// every time using the insert method and the provided data, but we 
+// quickly notice that the same team comes back multiple time, as team
+// 1 or 2, so we need tu update the hasmap entry accordingly.
+// 
+// To accomplish this i used 3 methods :
+//
+// The entry() method gives us access to the corresponding entry if it 
+// exists, this entry can then be manipulated in the following closure using the 
+// and_modify() method that both the goals scored and received depending on the
+// new data.
+//
+// But what if there is no entry ? this is where the or_insert() method 
+// comes into play, because when the entry() method is called on a non-existant
+// entry, it will return a vacant entry, when and_ modify detects a 
+// vacant entry, it returns it as is without modification, and then the 
+// or_modify detects that it is given a Vacant entry and insert the given
+// default (our Team struct)
 
 use std::collections::HashMap;
 
@@ -39,6 +64,17 @@ fn build_scores_table(results: String) -> HashMap<String, Team> {
         // will be the number of goals conceded by team_2, and similarly
         // goals scored by team_2 will be the number of goals conceded by
         // team_1.
+        
+
+        scores.entry(team_1_name)
+            .and_modify(|e| { e.goals_scored += team_1_score })
+            .and_modify(|e| { e.goals_conceded += team_2_score})
+            .or_insert(Team{goals_scored : team_1_score,goals_conceded:team_2_score});
+
+        scores.entry(team_2_name)
+            .and_modify(|e| { e.goals_scored += team_2_score })
+            .and_modify(|e| { e.goals_conceded += team_1_score})
+            .or_insert(Team{goals_scored : team_2_score,goals_conceded:team_1_score});
     }
     scores
 }
