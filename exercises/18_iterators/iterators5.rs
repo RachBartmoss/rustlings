@@ -11,7 +11,38 @@
 // Execute `rustlings hint iterators5` or use the `hint` watch subcommand for a
 // hint.
 
-// I AM NOT DONE
+
+
+// This time we must use iterators method to accomplish the exercise
+// 
+// In count_iterator, we are given an hashmap to iter over and a progress
+// variant to match. and to return the number of key with a value of 
+// Progress//XXXX.
+// on each node we iter over in the hashmap, we get a key/value pair in
+// the form of a tuple, so by using the filter method on each node and
+// checking the value of each node.1(the value part of the key/value pair)
+// and dereferencing it, then comparing it to the value given as function
+// argument. This way filter returns a new iterator, containing only the 
+// node that passed the filter test.
+// we then use the count() method to return a usize with a value 
+// equal to the number of iterator node left.
+//
+// the next case is very similar, except we have a collection of hashmaps,
+// rather than a single one. This mean that when we iter over our argument,
+// each node will be a full hashmap !
+// 
+// So to do this we need to iter over the collection, iter inside of every
+// hashmap inside the collection, count in each hashmap node the number of 
+// exercise with the correct progress value, then add all these result 
+// and return them.
+//
+// to do this we will use the map() method to apply a closure on each node
+// this closure will be the exact same we used in the previous exercise, 
+// and by using it on every hashmap, the first iterator ( the one over the 
+// collection) will now have a list of nodes containing usize data with the 
+// number of correct value. 
+// Then we just have to add all of them together by using the sum() method
+// that takes all the elements and add them together before returning them.
 
 use std::collections::HashMap;
 
@@ -35,7 +66,8 @@ fn count_for(map: &HashMap<String, Progress>, value: Progress) -> usize {
 fn count_iterator(map: &HashMap<String, Progress>, value: Progress) -> usize {
     // map is a hashmap with String keys and Progress values.
     // map = { "variables1": Complete, "from_str": None, ... }
-    todo!();
+    
+    map.iter().filter(|x| *x.1 == value).count()
 }
 
 fn count_collection_for(collection: &[HashMap<String, Progress>], value: Progress) -> usize {
@@ -54,7 +86,11 @@ fn count_collection_iterator(collection: &[HashMap<String, Progress>], value: Pr
     // collection is a slice of hashmaps.
     // collection = [{ "variables1": Complete, "from_str": None, ... },
     //     { "variables2": Complete, ... }, ... ]
-    todo!();
+    collection.iter()
+        .map(|map| map.iter()
+            .filter(|x| *x.1 == value)
+            .count())
+        .sum()
 }
 
 #[cfg(test)]
