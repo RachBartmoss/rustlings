@@ -12,6 +12,12 @@
 
 // I AM NOT DONE
 
+// Here the trick is simple, juste use the as keyword as the compiler is telling you
+// This is possible because this time we are working with primitive types, so we can use this
+// keyword to convert the types. If we were working with custom types, we would have to implement
+// the From and Into traits for the types we want to convert.
+
+
 fn average(values: &[f64]) -> f64 {
     let total = values.iter().sum::<f64>();
     total / values.len() as f64
